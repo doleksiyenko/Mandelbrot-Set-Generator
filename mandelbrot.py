@@ -1,4 +1,4 @@
-from matplotlib import pyplot as plt
+from settings import bounds
 from numba import jit
 from PIL import Image
 import numpy as np
@@ -13,33 +13,33 @@ class Mandelbrot:
         # the resolution of the image
         self.height = resolution[1]
         self.width = resolution[0]
-        print(self.height)
         # the coordinates on which to zoom in on
         self.zoom_x = zoom[0]
         self.zoom_y = zoom[1]
-
-        self.x_bound = np.array([-2, 1])
-        self.y_bound = np.array([-1, 1])
 
     @jit
     def generate_fractal(self, max_iterations) -> np.array:
         """
         The mandelbrot set is symmetrical, therefore, only the top portion of
         the set must be generated.
+
+        Colour range from 0-255 gray-scale image.
+        Apply a sigmoid transformation, meaning smaller no. of iterations makes
+        pixel whiter
         """
         image = np.zeros((self.height, self.width))
         colour = 0
 
         # for every pixel in the image
         for py in range(self.height):
-            print(py)
+            print("Completed: {}/{} rows".format(py, self.height - 1))
             for px in range(self.width):
                 # c is the coordinate related with the center of the pixel
                 # (px, py)
-                c = complex(self.x_bound[0] + (0.5 + px) * (
-                            (self.x_bound[1] - self.x_bound[0]) / self.width),
-                            (self.y_bound[1] - (0.5 + py) * (
-                                self.y_bound[1] - self.y_bound[0]) / self.height
+                c = complex(bounds[0][0] + (0.5 + px) * (
+                            (bounds[0][1] - bounds[0][0]) / self.width),
+                            (bounds[1][1] - (0.5 + py) * (
+                                bounds[1][1] - bounds[1][0]) / self.height
                              ))
                 z = complex(0, 0)
 
@@ -52,23 +52,28 @@ class Mandelbrot:
                         # then this pixel has escaped the bound, and colour the
                         # pixel depending on how many iterations it took to
                         # escape
-                        colour = 0
+
+                        colour = 255 - (iteration * np.log2(
+                            np.log2(z.real**2 + z.imag**2)))
                         break
 
                     if iteration == max_iterations - 1:
                         # then this pixel is bounded
                         colour = 255
+
                 image[py, px] = colour
+
         return image
 
     def _set_bounds(self) -> None:
         pass
 
-    def get_image(self) -> None:
+    def get_image(self, name: str) -> None:
         """
         Generate the image of the mandelbrot, with a scale and center
         coordinates
         """
-        image = Image.fromarray(self.generate_fractal(max_iterations=300))
-        image = image.convert("L")
-        image.save('test.png')
+        image = Image.fromarray(self.generate_fractal(max_iterations=255))
+        image = image.convert('L')
+        image.save('{}.png'.format(name))
+
