@@ -8,5 +8,7 @@ The file "main.py" generates a GIF given a point location found in "settings.py"
 
 The resolution of the image can also be adjusted in settings.
 
-
+Mandelbrot (Resolution 3000x2000)
 ![Mandelbrot 3000x2000](https://github.com/doleksiyenko/Mandelbrot-Set-Generator/blob/master/images/set_3000.png)
+
+![Mandelbrot 3000x2000 Close-up](https://github.com/doleksiyenko/Mandelbrot-Set-Generator/blob/master/images/logarithmic2_smoothing.png)
