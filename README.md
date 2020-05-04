@@ -12,3 +12,6 @@ Mandelbrot (Resolution 3000x2000)
 ![Mandelbrot 3000x2000](https://github.com/doleksiyenko/Mandelbrot-Set-Generator/blob/master/images/set_3000.png)
 
 ![Mandelbrot 3000x2000 Close-up](https://github.com/doleksiyenko/Mandelbrot-Set-Generator/blob/master/images/logarithmic2_smoothing.png)
+
+A sample low-resolution animation:
+![Sample Low-res Animation](https://github.com/doleksiyenko/Mandelbrot-Set-Generator/blob/master/videos/set_animation.gif)
