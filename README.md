@@ -7,3 +7,6 @@ The file "main.py" generates a GIF given a point location found in "settings.py"
 "main.py" will create a new folder in the script's directory location, and then once all the images are generated, the imageio library generates the GIF.
 
 The resolution of the image can also be adjusted in settings.
+
+
+![Mandelbrot 3000x2000](https://github.com/doleksiyenko/Mandelbrot-Set-Generator/blob/master/images/set_3000.png)
