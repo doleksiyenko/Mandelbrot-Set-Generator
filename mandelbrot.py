@@ -2,10 +2,11 @@ from numba import jit
 from PIL import Image
 import numpy as np
 import time
+from settings import resolution
 
 
 @jit(nopython=True, fastmath=True)
-def generate_fractal(max_iterations, bounds) -> np.array:
+def generate_fractal(max_iterations, bounds, _resolution) -> np.array:
     """
     The mandelbrot set is symmetrical, therefore, only the top portion of
     the set must be generated.
@@ -14,19 +15,19 @@ def generate_fractal(max_iterations, bounds) -> np.array:
     Apply a sigmoid transformation, meaning smaller no. of iterations makes
     pixel whiter
     """
-    image_array = np.zeros((1000, 1500))
+    image_array = np.zeros((resolution[0], resolution[1]))
     colour = 0
 
     # for every pixel in the image
-    for py in range(1000):
+    for py in range(resolution[0]):
         # print("Completed: {}/{} rows".format(py, 2000 - 1))
-        for px in range(1500):
+        for px in range(resolution[1]):
             # c is the coordinate related with the center of the pixel
             # (px, py)
             c = complex(bounds[0][0] + (0.5 + px) * (
-                        (bounds[0][1] - bounds[0][0]) / 1500),
+                        (bounds[0][1] - bounds[0][0]) / resolution[1]),
                         (bounds[1][1] - (0.5 + py) * (
-                            bounds[1][1] - bounds[1][0]) / 1000
+                            bounds[1][1] - bounds[1][0]) / resolution[0]
                          ))
             z = complex(0, 0)
 
@@ -59,6 +60,7 @@ def get_image(name: str, bound) -> None:
     coordinates
     """
     frame_ = Image.fromarray(generate_fractal(max_iterations=350,
-                                              bounds=bound))
+                                              bounds=bound,
+                                              _resolution=resolution))
     frame_ = frame_.convert('L')
     frame_.save('{}.png'.format(name))

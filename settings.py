@@ -9,3 +9,4 @@ bounds = np.array([
     [1, -1]],
     np.double)
 frames = 1200
+resolution = (500, 750)
