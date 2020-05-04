@@ -9,13 +9,10 @@ class Mandelbrot:
     A class for the generation of mandelbrot sets.
 
     """
-    def __init__(self, resolution: np.array, zoom: np.array):
+    def __init__(self, resolution: np.array):
         # the resolution of the image
         self.height = resolution[1]
         self.width = resolution[0]
-        # the coordinates on which to zoom in on
-        self.zoom_x = zoom[0]
-        self.zoom_y = zoom[1]
 
     @jit
     def generate_fractal(self, max_iterations) -> np.array:
@@ -32,7 +29,7 @@ class Mandelbrot:
 
         # for every pixel in the image
         for py in range(self.height):
-            print("Completed: {}/{} rows".format(py, self.height - 1))
+            # print("Completed: {}/{} rows".format(py, self.height - 1))
             for px in range(self.width):
                 # c is the coordinate related with the center of the pixel
                 # (px, py)
@@ -64,9 +61,6 @@ class Mandelbrot:
                 image[py, px] = colour
 
         return image
-
-    def _set_bounds(self) -> None:
-        pass
 
     def get_image(self, name: str) -> None:
         """
