@@ -68,7 +68,7 @@ if __name__ == '__main__':
         images_directory = os.getcwd()
 
         print('Generating GIF...')
-        with imageio.get_writer(path + '/movie.gif', mode='I') \
+        with imageio.get_writer(path + '/set_animation.gif', mode='I') \
                 as writer:
             for filename in natsorted(os.listdir(os.getcwd())):
                 image = imageio.imread(filename)
